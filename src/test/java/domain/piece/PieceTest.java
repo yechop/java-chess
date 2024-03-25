@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.position.Position;
 import domain.Side;
+import domain.position.Position;
 import fixture.PieceFixture;
 import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;
@@ -23,14 +23,15 @@ public class PieceTest {
             }
         };
 
+        Position current = PositionFixture.a1();
         Position target = PositionFixture.a4();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
             put(target, PieceFixture.blackPawn());
         }};
 
-        Assertions.assertThatThrownBy(() -> piece.checkBlockingPiece(target, pieces))
-                .isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> piece.checkMovable(current, target, pieces))
+                .isInstanceOf(IllegalArgumentException.class).hasMessage("target 위치에 같은 팀 기물이 존재합니다.");
     }
 
     @DisplayName("target 위치로 이동하는 경로에 기물이 존재하면 예외가 발생한다.")
@@ -43,13 +44,14 @@ public class PieceTest {
             }
         };
 
+        Position current = PositionFixture.a1();
         Position target = PositionFixture.a4();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
             put(PositionFixture.a2(), PieceFixture.blackPawn());
         }};
 
-        Assertions.assertThatThrownBy(() -> piece.checkBlockingPiece(target, pieces))
-                .isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> piece.checkMovable(current, target, pieces))
+                .isInstanceOf(IllegalArgumentException.class).hasMessage("target 위치로 이동하는 경로에 기물이 존재합니다.");
     }
 }

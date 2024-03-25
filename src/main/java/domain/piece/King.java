@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.position.Position;
 import domain.Side;
+import domain.position.Position;
 
 import java.util.Map;
 
@@ -18,7 +18,6 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
-        checkBlockingPiece(target, pieces);
         return hasOnlyOneFileGap(current, target) ||
                 hasOnlyOneRankGap(current, target) ||
                 hasOnlyOneDiagonalGap(current, target);

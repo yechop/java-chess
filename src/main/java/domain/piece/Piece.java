@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.position.Position;
 import domain.Side;
+import domain.position.Position;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +16,35 @@ public abstract class Piece {
     }
 
     public abstract boolean canMove(Position current, Position target, Map<Position, Piece> pieces);
+
+    public void checkMovable(Position current, Position target, Map<Position, Piece> piecesOnPath) {
+        validateNotSamePosition(current, target);
+        checkBlockingPiece(target, piecesOnPath);
+        checkMovementRule(current, target, piecesOnPath);
+    }
+
+    private void validateNotSamePosition(Position current, Position target) {
+        if (current.equals(target)) {
+            throw new IllegalArgumentException("source 위치와 target 위치가 같습니다.");
+        }
+    }
+
+    private void checkBlockingPiece(Position target, Map<Position, Piece> pieces) {
+        if (pieces.containsKey(target) && !pieces.get(target).isOpponent(this)) {
+            throw new IllegalArgumentException("target 위치에 같은 팀 기물이 존재합니다.");
+        }
+        List<Position> positionsExceptTarget = filterPositionsExceptTarget(target, pieces);
+        if (!positionsExceptTarget.isEmpty()) {
+            throw new IllegalArgumentException("target 위치로 이동하는 경로에 기물이 존재합니다.");
+        }
+    }
+
+    private void checkMovementRule(Position current, Position target, Map<Position, Piece> piecesOnPath) {
+        if (canMove(current, target, piecesOnPath)) {
+            return;
+        }
+        throw new IllegalArgumentException("기물 이동 규칙에 맞지 않습니다.");
+    }
 
     public boolean isRook() {
         return false;
@@ -51,16 +80,6 @@ public abstract class Piece {
 
     public boolean isSameSide(Side other) {
         return side == other;
-    }
-
-    public void checkBlockingPiece(Position target, Map<Position, Piece> pieces) {
-        if (pieces.containsKey(target) && !pieces.get(target).isOpponent(this)) {
-            throw new IllegalArgumentException("target 위치에 같은 팀 기물이 존재합니다.");
-        }
-        List<Position> positionsExceptTarget = filterPositionsExceptTarget(target, pieces);
-        if (!positionsExceptTarget.isEmpty()) {
-            throw new IllegalArgumentException("target 위치로 이동하는 경로에 기물이 존재합니다.");
-        }
     }
 
     private List<Position> filterPositionsExceptTarget(Position target, Map<Position, Piece> pieces) {

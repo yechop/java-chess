@@ -55,33 +55,22 @@ public class ChessBoard {
     }
 
     public void move(Position current, Position target) {
-        validateNotSamePosition(current, target);
-
         Piece piece = findMovablePiece(current, target);
         board.remove(current);
         board.put(target, piece);
-    }
-
-    private void validateNotSamePosition(Position current, Position target) {
-        if (current.equals(target)) {
-            throw new IllegalArgumentException("source 위치와 target 위치가 같습니다.");
-        }
     }
 
     private Piece findMovablePiece(Position current, Position target) {
         Map<Position, Piece> piecesOnPath = findPiecesOnPath(current, target);
 
         Piece piece = board.get(current);
-        boolean canPieceMove = piece.canMove(current, target, piecesOnPath);
-        if (!canPieceMove) {
-            throw new IllegalArgumentException("이동할 수 없는 target 입니다.");
-        }
+        piece.checkMovable(current, target, piecesOnPath);
         return piece;
     }
 
     private Map<Position, Piece> findPiecesOnPath(Position current, Position target) {
         Path path = new Path(current, target);
-        return path.findPieces(board);
+        return path.findPieces(target, board);
     }
 
     public Map<Position, Piece> getBoard() {

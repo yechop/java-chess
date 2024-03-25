@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.position.Position;
 import domain.Side;
+import domain.position.Position;
 
 import java.util.Map;
 
@@ -18,13 +18,12 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
-        checkBlockingPiece(target, pieces);
 
         if (current.isSameRank(target) || isReverseMove(current, target)) {
-            return false;
+            throw new IllegalArgumentException("폰은 수평 혹은 뒤로 이동할 수 없습니다.");
         }
         if (current.isSameFile(target) && pieces.containsKey(target)) {
-            return false;
+            throw new IllegalArgumentException("폰은 같은 선상의 적을 공격할 수 없습니다.");
         }
         if (isInitPosition(current) && current.hasOnlyTwoRankGap(target)) {
             return true;
