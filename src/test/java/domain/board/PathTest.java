@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,17 +89,18 @@ public class PathTest {
 
         Path path = new Path(current, target);
 
-        Map<Position, Piece> board = new HashMap<>();
+        Map<Position, Piece> board = new LinkedHashMap<>();
 
         board.put(PositionFixture.a2(), new Rook(Side.BLACK));
         board.put(PositionFixture.b2(), new Pawn(Side.BLACK));
         board.put(PositionFixture.g7(), new King(Side.BLACK));
 
-        Map<Position, Piece> pieces = path.findPieces(board);
+        Map<Position, Piece> pieces = path.findPieces(target, board);
 
-        assertThat(pieces).containsExactly(
-                Map.entry(PositionFixture.b2(), new Pawn(Side.BLACK)),
-                Map.entry(PositionFixture.g7(), new King(Side.BLACK))
-        );
+        Map<Position, Piece> piecesOnPath = new LinkedHashMap<>();
+        piecesOnPath.put(PositionFixture.b2(), new Pawn(Side.BLACK));
+        piecesOnPath.put(PositionFixture.g7(), new King(Side.BLACK));
+
+        assertThat(pieces).isEqualTo(piecesOnPath);
     }
 }

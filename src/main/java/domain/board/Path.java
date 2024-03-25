@@ -55,9 +55,15 @@ public class Path {
                 .toList();
     }
 
-    public Map<Position, Piece> findPieces(Map<Position, Piece> board) {
-        return board.entrySet().stream()
+    public Map<Position, Piece> findPieces(Position target, Map<Position, Piece> board) {
+        Map<Position, Piece> pieces = board.entrySet().stream()
                 .filter(entry -> path.contains(entry.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        if (board.containsKey(target)) {
+            pieces.put(target, board.get(target));
+        }
+
+        return pieces;
     }
 }
