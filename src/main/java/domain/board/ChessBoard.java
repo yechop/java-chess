@@ -48,10 +48,14 @@ public class ChessBoard {
     }
 
     public Piece findPiece(Position position) {
-        if (!hasPiece(position)) {
+        if (isEmpty(position)) {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
         }
         return board.get(position);
+    }
+
+    private boolean isEmpty(Position position) {
+        return !board.containsKey(position);
     }
 
     public void move(Position current, Position target) {

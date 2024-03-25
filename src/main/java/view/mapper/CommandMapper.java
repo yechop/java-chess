@@ -37,7 +37,7 @@ public enum CommandMapper {
 
     public static Command toMoveCommand(String input) {
         Command command = from(input);
-        if (!command.isMove()) {
+        if (command.isNotMove()) {
             throw new IllegalArgumentException("move 명령어를 입력해야 합니다.");
         }
         return command;

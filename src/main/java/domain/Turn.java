@@ -10,7 +10,8 @@ public class Turn {
 
     public void check(ChessBoard chessBoard, Position current) {
         Piece currentPiece = chessBoard.findPiece(current);
-        if (!currentPiece.isSameSide(side)) {
+
+        if (currentPiece.isNotSameSide(side)) {
             throw new IllegalArgumentException("해당 진영의 턴이 아닙니다.");
         }
     }

@@ -30,11 +30,11 @@ public abstract class Piece {
     }
 
     private void checkBlockingPiece(Position target, Map<Position, Piece> pieces) {
-        if (pieces.containsKey(target) && !pieces.get(target).isOpponent(this)) {
+        if (pieces.containsKey(target) && pieces.get(target).isSameSide(this)) {
             throw new IllegalArgumentException("target 위치에 같은 팀 기물이 존재합니다.");
         }
         List<Position> positionsExceptTarget = filterPositionsExceptTarget(target, pieces);
-        if (!positionsExceptTarget.isEmpty()) {
+        if (positionsExceptTarget.size() > 0) {
             throw new IllegalArgumentException("target 위치로 이동하는 경로에 기물이 존재합니다.");
         }
     }
@@ -74,12 +74,16 @@ public abstract class Piece {
         return side.isBlack();
     }
 
-    public boolean isOpponent(Piece other) {
-        return side != other.side;
+    public boolean isSameSide(Piece other) {
+        return side == other.side;
     }
 
-    public boolean isSameSide(Side other) {
-        return side == other;
+    public boolean isNotSameSide(Side other) {
+        return side != other;
+    }
+
+    public boolean isNotSameSide(Piece other) {
+        return side != other.side;
     }
 
     private List<Position> filterPositionsExceptTarget(Position target, Map<Position, Piece> pieces) {

@@ -49,6 +49,6 @@ public class Pawn extends Piece {
     }
 
     private boolean hasOpponentAtTarget(Position target, Map<Position, Piece> pieces) {
-        return pieces.containsKey(target) && pieces.get(target).isOpponent(this);
+        return pieces.containsKey(target) && pieces.get(target).isNotSameSide(this);
     }
 }
