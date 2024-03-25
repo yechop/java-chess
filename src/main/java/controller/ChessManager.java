@@ -1,9 +1,9 @@
 package controller;
 
-import domain.board.ChessBoard;
 import domain.Command;
-import domain.position.Position;
 import domain.Turn;
+import domain.board.ChessBoard;
+import domain.position.Position;
 import view.InputView;
 import view.OutputView;
 
@@ -24,7 +24,6 @@ public class ChessManager {
         }
 
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.init();
         outputView.printChessBoard(chessBoard);
 
         play(chessBoard);

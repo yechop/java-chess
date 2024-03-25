@@ -1,6 +1,5 @@
 package domain.board;
 
-import domain.board.ChessBoard;
 import fixture.PieceFixture;
 import fixture.PositionFixture;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +18,7 @@ public class ChessBoardTest {
     @BeforeEach
     void setUp() {
         chessBoard = new ChessBoard(new LinkedHashMap<>());
-        chessBoard.init();
+        chessBoard.initChessBoard();
     }
 
     @DisplayName("검은색 룩은 a8, h8에 위치한다. 흰색 룩은 a1, h1에 위치한다.")

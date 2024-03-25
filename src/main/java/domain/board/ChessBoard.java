@@ -19,13 +19,14 @@ public class ChessBoard {
 
     public ChessBoard(Map<Position, Piece> board) {
         this.board = board;
+        initChessBoard();
     }
 
     public ChessBoard() {
         this(new LinkedHashMap<>());
     }
 
-    public void init() {
+    private void initChessBoard() {
         Arrays.stream(Side.values()).forEach(this::initSide);
     }
 
