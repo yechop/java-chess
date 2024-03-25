@@ -14,7 +14,6 @@ public class TurnTest {
     @Test
     void invalidTurnTest() {
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.initChessBoard();
 
         Turn turn = new Turn();
 
@@ -26,7 +25,6 @@ public class TurnTest {
     @Test
     void validTurnTest() {
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.initChessBoard();
 
         Turn turn = new Turn();
 
@@ -38,7 +36,6 @@ public class TurnTest {
     @Test
     void turnSwitchTest() {
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.initChessBoard();
 
         Turn turn = new Turn();
 

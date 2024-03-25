@@ -10,8 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class ChessBoard {
 
@@ -82,59 +80,8 @@ public class ChessBoard {
     }
 
     private Map<Position, Piece> findPiecesOnPath(Position current, Position target) {
-        if (current.isDiagonal(target)) {
-            return makePiecesOnDiagonalPath(current, target);
-        }
-        if (current.isSameRank(target)) {
-            return makePiecesOnHorizontalPath(current, target);
-        }
-        if (current.isSameFile(target)) {
-            return makePiecesOnVerticalPath(current, target);
-        }
-        return new LinkedHashMap<>();
-    }
-
-    private Map<Position, Piece> makePiecesOnDiagonalPath(Position current, Position target) {
-        List<File> files = current.findBetweenFile(target);
-        List<Rank> ranks = current.findBetweenRank(target);
-
-        List<Position> path = IntStream.range(0, files.size())
-                .mapToObj(i -> Position.valueOf(files.get(i), ranks.get(i)))
-                .toList();
-
-        return makePiecesOnPath(target, path);
-    }
-
-    private Map<Position, Piece> makePiecesOnHorizontalPath(Position current, Position target) {
-        List<File> files = current.findBetweenFile(target);
-
-        List<Position> path = files.stream()
-                .map(current::createWithSameRank)
-                .toList();
-
-        return makePiecesOnPath(target, path);
-    }
-
-    private Map<Position, Piece> makePiecesOnVerticalPath(Position current, Position target) {
-        List<Rank> files = current.findBetweenRank(target);
-
-        List<Position> path = files.stream()
-                .map(current::createWithSameFile)
-                .toList();
-
-        return makePiecesOnPath(target, path);
-    }
-
-    private Map<Position, Piece> makePiecesOnPath(Position target, List<Position> positions) {
-        Map<Position, Piece> pieces = board.entrySet().stream()
-                .filter(entry -> positions.contains(entry.getKey()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-        if (hasPiece(target)) {
-            pieces.put(target, board.get(target));
-        }
-
-        return pieces;
+        Path path = new Path(current, target);
+        return path.findPieces(board);
     }
 
     public Map<Position, Piece> getBoard() {
