@@ -2,8 +2,8 @@ package view;
 
 import domain.Command;
 import domain.board.File;
-import domain.position.Position;
 import domain.board.Rank;
+import domain.position.Position;
 import view.mapper.CommandMapper;
 import view.mapper.FileMapper;
 import view.mapper.RankMapper;
@@ -32,14 +32,14 @@ public class InputView {
         if (scanner.hasNext()) {
             String position = scanner.next();
             if (position.length() != 2) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("포지션은 file과 rank를 붙여 입력해주세요.");
             }
             File file = FileMapper.from(position.substring(0, 1));
             Rank rank = RankMapper.from(position.substring(1, 2));
 
             return Position.valueOf(file, rank);
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("move 명령어 이후 source와 target을 입력해주세요.");
     }
 
     public void readNextLine() {
