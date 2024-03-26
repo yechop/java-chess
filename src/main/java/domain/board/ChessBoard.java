@@ -1,15 +1,9 @@
 package domain.board;
 
-import domain.Side;
-import domain.piece.*;
-import domain.position.InitPosition;
+import domain.piece.Piece;
 import domain.position.Position;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class ChessBoard {
 
@@ -17,30 +11,6 @@ public class ChessBoard {
 
     public ChessBoard(Map<Position, Piece> board) {
         this.board = board;
-        initChessBoard();
-    }
-
-    public ChessBoard() {
-        this(new LinkedHashMap<>());
-    }
-
-    private void initChessBoard() {
-        Arrays.stream(Side.values()).forEach(this::initSide);
-    }
-
-    private void initSide(Side side) {
-        initPiece(InitPosition.ROOK, side, () -> new Rook(side));
-        initPiece(InitPosition.KNIGHT, side, () -> new Knight(side));
-        initPiece(InitPosition.BISHOP, side, () -> new Bishop(side));
-        initPiece(InitPosition.QUEEN, side, () -> new Queen(side));
-        initPiece(InitPosition.KING, side, () -> new King(side));
-        initPiece(InitPosition.PAWN, side, () -> new Pawn(side));
-    }
-
-    private void initPiece(InitPosition initPosition, Side side, Supplier<Piece> pieceSupplier) {
-        List<File> files = initPosition.files();
-        Rank rank = initPosition.rank(side);
-        files.forEach(file -> board.put(Position.valueOf(file, rank), pieceSupplier.get()));
     }
 
     public boolean hasPiece(Position position) {
@@ -75,9 +45,5 @@ public class ChessBoard {
     private Map<Position, Piece> findPiecesOnPath(Position current, Position target) {
         Path path = new Path(current, target);
         return path.findPieces(target, board);
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return board;
     }
 }

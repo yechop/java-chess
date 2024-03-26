@@ -3,6 +3,7 @@ package controller;
 import domain.Command;
 import domain.Turn;
 import domain.board.ChessBoard;
+import domain.board.ChessBoardInitializer;
 import domain.position.Position;
 import view.InputView;
 import view.OutputView;
@@ -24,7 +25,8 @@ public class ChessManager {
             return;
         }
 
-        ChessBoard chessBoard = new ChessBoard();
+        //ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.init());
         outputView.printChessBoard(chessBoard);
 
         startChessGame(chessBoard);
