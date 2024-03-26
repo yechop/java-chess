@@ -15,7 +15,7 @@ public enum Command {
         return this == MOVE;
     }
 
-    public boolean isNotMove() {
-        return this != MOVE;
+    public boolean isStart() {
+        return this == START;
     }
 }

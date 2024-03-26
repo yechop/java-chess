@@ -35,10 +35,10 @@ public enum CommandMapper {
                 .orElseThrow(() -> new IllegalArgumentException("입력값이 명령어 목록에 없습니다."));
     }
 
-    public static Command toMoveCommand(String input) {
+    public static Command toPlayCommand(String input) {
         Command command = from(input);
-        if (command.isNotMove()) {
-            throw new IllegalArgumentException("move 명령어를 입력해야 합니다.");
+        if (command.isStart()) {
+            throw new IllegalArgumentException("게임 도중 start 명령을 입력할 수 없습니다.");
         }
         return command;
     }
