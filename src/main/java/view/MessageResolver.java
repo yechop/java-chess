@@ -1,10 +1,10 @@
 package view;
 
 import domain.board.ChessBoard;
-import domain.piece.Piece;
 import domain.board.File;
-import domain.position.Position;
 import domain.board.Rank;
+import domain.piece.Piece;
+import domain.position.Position;
 import view.mapper.PieceMapper;
 
 public class MessageResolver {

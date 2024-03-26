@@ -12,11 +12,6 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isQueen() {
-        return true;
-    }
-
-    @Override
     public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
         return current.isDiagonal(target) || current.isSameFile(target) || current.isSameRank(target);
     }

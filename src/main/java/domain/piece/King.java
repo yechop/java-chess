@@ -12,11 +12,6 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isKing() {
-        return true;
-    }
-
-    @Override
     public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
         return hasOnlyOneFileGap(current, target) ||
                 hasOnlyOneRankGap(current, target) ||

@@ -11,11 +11,6 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isRook() {
-        return true;
-    }
-
-    @Override
     public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
         return current.isSameRank(target) || current.isSameFile(target);
     }

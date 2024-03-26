@@ -12,11 +12,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
     public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
 
         if (current.isSameRank(target) || isReverseMove(current, target)) {

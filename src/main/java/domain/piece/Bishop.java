@@ -12,11 +12,6 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isBishop() {
-        return true;
-    }
-
-    @Override
     public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
         return current.isDiagonal(target);
     }
