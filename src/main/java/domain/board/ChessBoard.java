@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class ChessBoard {
 
+    public static final int ALL_KING_ALIVE = 2;
     private final Map<Position, Piece> board;
 
     public ChessBoard(Map<Position, Piece> board) {
@@ -45,5 +46,13 @@ public class ChessBoard {
     private Map<Position, Piece> findPiecesOnPath(Position current, Position target) {
         Path path = new Path(current, target);
         return path.findPieces(target, board);
+    }
+
+    public boolean isKingAlive() {
+        long kingCount = board.values().stream()
+                .filter(Piece::isKing)
+                .count();
+
+        return kingCount == ALL_KING_ALIVE;
     }
 }

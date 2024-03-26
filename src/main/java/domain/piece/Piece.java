@@ -62,6 +62,10 @@ public abstract class Piece {
         return side != other.side;
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     private List<Position> filterPositionsExceptTarget(Position target, Map<Position, Piece> pieces) {
         return pieces.keySet().stream()
                 .filter(key -> key != target)

@@ -25,7 +25,6 @@ public class ChessManager {
             return;
         }
 
-        //ChessBoard chessBoard = new ChessBoard();
         ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.init());
         outputView.printChessBoard(chessBoard);
 
@@ -38,8 +37,15 @@ public class ChessManager {
 
         while (command.isMove()) {
             progressOneTurn(chessBoard, turn);
-            command = inputView.readPlayCommand();
+            command = decideNextCommand(chessBoard);
         }
+    }
+
+    private Command decideNextCommand(ChessBoard chessBoard) {
+        if (chessBoard.isKingAlive()) {
+            return inputView.readPlayCommand();
+        }
+        return Command.END;
     }
 
     private void progressOneTurn(ChessBoard chessBoard, Turn turn) {

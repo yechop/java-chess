@@ -32,4 +32,9 @@ public class King extends Piece {
         return current.isDiagonal(target) &&
                 current.hasOneFileGap(target);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
