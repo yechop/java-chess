@@ -15,24 +15,34 @@ import java.util.Map;
 
 class ScoreCalculatorTest {
 
-    @DisplayName("폰을 제외한 나머지 기물들의 점수를 계산한다.")
+    @DisplayName("기물들의 점수를 계산한다.")
     @Test
     void calculateMajorPieceScore() {
 
         ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.init());
         ScoreCalculator scoreCalculator = new ScoreCalculator(chessBoard);
 
-        Assertions.assertThat(scoreCalculator.sumMajorPieceScore(Side.BLACK)).isEqualTo(30);
+        Assertions.assertThat(scoreCalculator.sumPiecesScore(Side.BLACK)).isEqualTo(38);
     }
 
     @DisplayName("같은 세로줄에 폰이 없으면 각 폰은 1점으로 점수를 계산한다.")
     @Test
     void calculateNoSameFilePawnScore() {
 
-        ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.init());
+        Map<Position, Piece> onlyPawnsBoard = new HashMap<>();
+        onlyPawnsBoard.put(PositionFixture.a2(), PieceFixture.blackPawn());
+        onlyPawnsBoard.put(PositionFixture.b2(), PieceFixture.blackPawn());
+        onlyPawnsBoard.put(PositionFixture.c2(), PieceFixture.blackPawn());
+        onlyPawnsBoard.put(PositionFixture.d2(), PieceFixture.blackPawn());
+        onlyPawnsBoard.put(PositionFixture.e2(), PieceFixture.blackPawn());
+        onlyPawnsBoard.put(PositionFixture.f2(), PieceFixture.blackPawn());
+        onlyPawnsBoard.put(PositionFixture.g2(), PieceFixture.blackPawn());
+        onlyPawnsBoard.put(PositionFixture.h2(), PieceFixture.blackPawn());
+
+        ChessBoard chessBoard = new ChessBoard(onlyPawnsBoard);
         ScoreCalculator scoreCalculator = new ScoreCalculator(chessBoard);
 
-        Assertions.assertThat(scoreCalculator.sumPawnScore(Side.BLACK)).isEqualTo(8);
+        Assertions.assertThat(scoreCalculator.sumPiecesScore(Side.BLACK)).isEqualTo(8);
     }
 
     @DisplayName("같은 세로줄에 폰이 있으면 그 폰들은 0.5점으로 점수를 계산한다.")
@@ -51,6 +61,6 @@ class ScoreCalculatorTest {
         ChessBoard chessBoard = new ChessBoard(board);
         ScoreCalculator scoreCalculator = new ScoreCalculator(chessBoard);
 
-        Assertions.assertThat(scoreCalculator.sumPawnScore(Side.BLACK)).isEqualTo(4.0);
+        Assertions.assertThat(scoreCalculator.sumPiecesScore(Side.BLACK)).isEqualTo(4.0);
     }
 }

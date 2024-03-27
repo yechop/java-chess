@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Command;
+import domain.GameStatus;
 import domain.Turn;
 import domain.board.ChessBoard;
 import domain.board.ChessBoardInitializer;
@@ -19,29 +20,40 @@ public class ChessManager {
     }
 
     public void start() {
-        Command command = inputView.readInitCommand();
-        inputView.readNextLine();
-        if (command.isEnd()) {
-            return;
-        }
-
         ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.init());
-        outputView.printChessBoard(chessBoard);
-
-        startChessGame(chessBoard);
-    }
-
-    private void startChessGame(ChessBoard chessBoard) {
-        Command command = inputView.readPlayCommand();
         Turn turn = new Turn();
+        Command command = inputView.readInitCommand();
 
-        while (command.isMove()) {
-            progressOneTurn(chessBoard, turn);
-            command = decideNextCommand(chessBoard);
+        while (!command.isEnd()) {
+            runStartCommand(command, chessBoard);
+            runMoveCommand(command, chessBoard, turn);
+            runStatusCommand(command, chessBoard);
+
+            command = decideGameCommand(chessBoard);
         }
     }
 
-    private Command decideNextCommand(ChessBoard chessBoard) {
+    private void runStartCommand(Command command, ChessBoard chessBoard) {
+        if (command.isStart()) {
+            outputView.printChessBoard(chessBoard);
+        }
+    }
+
+    private void runMoveCommand(Command command, ChessBoard chessBoard, Turn turn) {
+        if (command.isMove()) {
+            progressOneTurn(chessBoard, turn);
+        }
+    }
+
+    private void runStatusCommand(Command command, ChessBoard chessBoard) {
+        if (command.isStatus()) {
+            GameStatus gameStatus = new GameStatus();
+            gameStatus.calculateStatusScore(chessBoard);
+            outputView.printStatus(gameStatus);
+        }
+    }
+
+    private Command decideGameCommand(ChessBoard chessBoard) {
         if (chessBoard.isKingAlive()) {
             return inputView.readPlayCommand();
         }

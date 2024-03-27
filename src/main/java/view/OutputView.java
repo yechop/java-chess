@@ -1,5 +1,6 @@
 package view;
 
+import domain.GameStatus;
 import domain.board.ChessBoard;
 
 public class OutputView {
@@ -12,5 +13,9 @@ public class OutputView {
 
     public void printChessBoard(ChessBoard chessBoard) {
         System.out.println(messageResolver.resolveChessBoardMessage(chessBoard));
+    }
+
+    public void printStatus(GameStatus gameStatus) {
+        System.out.println(messageResolver.resolveStatusMessage(gameStatus));
     }
 }

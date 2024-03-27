@@ -1,11 +1,14 @@
 package view;
 
+import domain.GameStatus;
+import domain.Side;
 import domain.board.ChessBoard;
 import domain.board.File;
 import domain.board.Rank;
 import domain.piece.Piece;
 import domain.position.Position;
 import view.mapper.PieceMapper;
+import view.mapper.SideMapper;
 
 public class MessageResolver {
 
@@ -38,5 +41,11 @@ public class MessageResolver {
             return PieceMapper.toSymbol(piece);
         }
         return EMPTY;
+    }
+
+    public String resolveStatusMessage(GameStatus gameStatus) {
+        return String.format("%s팀 스코어: %.1f" + LINE_SEPARATOR, SideMapper.toName(Side.BLACK), gameStatus.blackScore()) +
+                String.format("%s팀 스코어: %.1f" + LINE_SEPARATOR, SideMapper.toName(Side.WHITE), gameStatus.whiteScore()) +
+                String.format("승리 팀: %s", SideMapper.toName(gameStatus.winner()));
     }
 }

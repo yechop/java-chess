@@ -5,6 +5,7 @@ public enum Command {
     START,
     END,
     MOVE,
+    STATUS,
     ;
 
     public boolean isEnd() {
@@ -17,5 +18,9 @@ public enum Command {
 
     public boolean isStart() {
         return this == START;
+    }
+
+    public boolean isStatus() {
+        return this == STATUS;
     }
 }

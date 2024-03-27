@@ -19,7 +19,9 @@ public class ChessBoardInitializer {
     }
 
     private static Map<Position, Piece> initChessBoard(Map<Position, Piece> board) {
-        Arrays.stream(Side.values()).forEach(side -> initSide(side, board));
+        Arrays.stream(Side.values())
+                .filter(Side::isNotNone)
+                .forEach(side -> initSide(side, board));
         return board;
     }
 

@@ -16,15 +16,18 @@ public class ScoreCalculator {
         this.chessBoard = chessBoard;
     }
 
-    public double sumMajorPieceScore(Side side) {
-        List<Piece> majorPieces = chessBoard.collectMajorPieces(side);
+    public double sumPiecesScore(Side side) {
+        return sumMajorPieceScore(chessBoard.collectMajorPieces(side)) +
+                sumPawnScore(chessBoard.collectPawns(side));
+    }
+
+    private double sumMajorPieceScore(List<Piece> majorPieces) {
         return majorPieces.stream()
                 .mapToDouble(Piece::getScore)
                 .sum();
     }
 
-    public double sumPawnScore(Side side) {
-        Map<Position, Piece> pawns = chessBoard.collectPawns(side);
+    private double sumPawnScore(Map<Position, Piece> pawns) {
         return pawns.entrySet().stream()
                 .mapToDouble(entry -> pawnScore(entry.getKey(), entry.getValue(), pawns.keySet()))
                 .sum();
