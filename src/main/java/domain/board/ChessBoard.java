@@ -1,9 +1,12 @@
 package domain.board;
 
+import domain.Side;
 import domain.piece.Piece;
 import domain.position.Position;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -54,5 +57,19 @@ public class ChessBoard {
                 .count();
 
         return kingCount == ALL_KING_ALIVE;
+    }
+
+    public List<Piece> collectMajorPieces(Side side) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameSide(side))
+                .filter(Piece::isMajorPiece)
+                .toList();
+    }
+
+    public Map<Position, Piece> collectPawns(Side side) {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameSide(side))
+                .filter(entry -> entry.getValue().isPawn())
+                .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

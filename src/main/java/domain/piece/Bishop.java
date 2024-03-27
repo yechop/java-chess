@@ -8,7 +8,7 @@ import java.util.Map;
 public class Bishop extends Piece {
 
     public Bishop(Side side) {
-        super(side);
+        super(side, PieceScore.BISHOP);
     }
 
     @Override

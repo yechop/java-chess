@@ -8,7 +8,7 @@ import java.util.Map;
 public class Queen extends Piece {
 
     public Queen(Side side) {
-        super(side);
+        super(side, PieceScore.QUEEN);
     }
 
     @Override

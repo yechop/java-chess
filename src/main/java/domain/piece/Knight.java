@@ -8,7 +8,7 @@ import java.util.Map;
 public class Knight extends Piece {
 
     public Knight(Side side) {
-        super(side);
+        super(side, PieceScore.KNIGHT);
     }
 
     @Override

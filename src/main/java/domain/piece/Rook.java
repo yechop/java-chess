@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Rook extends Piece {
     public Rook(Side side) {
-        super(side);
+        super(side, PieceScore.ROOK);
     }
 
     @Override

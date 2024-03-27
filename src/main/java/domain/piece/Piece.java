@@ -10,9 +10,11 @@ import java.util.Objects;
 public abstract class Piece {
 
     private final Side side;
+    protected final PieceScore score;
 
-    public Piece(Side side) {
+    public Piece(Side side, PieceScore score) {
         this.side = side;
+        this.score = score;
     }
 
     public abstract boolean canMove(Position current, Position target, Map<Position, Piece> pieces);
@@ -50,6 +52,10 @@ public abstract class Piece {
         return side.isBlack();
     }
 
+    public boolean isSameSide(Side other) {
+        return side == other;
+    }
+
     public boolean isSameSide(Piece other) {
         return side == other.side;
     }
@@ -64,6 +70,14 @@ public abstract class Piece {
 
     public boolean isKing() {
         return false;
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
+    public boolean isMajorPiece() {
+        return true;
     }
 
     private List<Position> filterPositionsExceptTarget(Position target, Map<Position, Piece> pieces) {
@@ -83,5 +97,13 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(side);
+    }
+
+    public double getScore() {
+        return score.getScore();
+    }
+
+    public double decreaseScore() {
+        throw new IllegalArgumentException("폰 외의 기물은 피스 점수를 변경할 수 없습니다.");
     }
 }

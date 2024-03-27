@@ -8,7 +8,7 @@ import java.util.Map;
 public class Pawn extends Piece {
 
     public Pawn(Side side) {
-        super(side);
+        super(side, PieceScore.PAWN);
     }
 
     @Override
@@ -45,5 +45,20 @@ public class Pawn extends Piece {
 
     private boolean hasOpponentAtTarget(Position target, Map<Position, Piece> pieces) {
         return pieces.containsKey(target) && pieces.get(target).isNotSameSide(this);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public boolean isMajorPiece() {
+        return false;
+    }
+
+    @Override
+    public double decreaseScore() {
+        return score.toHalfScore();
     }
 }
