@@ -46,6 +46,6 @@ public class MessageResolver {
     public String resolveStatusMessage(GameStatus gameStatus) {
         return String.format("%s팀 스코어: %.1f" + LINE_SEPARATOR, SideMapper.toName(Side.BLACK), gameStatus.blackScore()) +
                 String.format("%s팀 스코어: %.1f" + LINE_SEPARATOR, SideMapper.toName(Side.WHITE), gameStatus.whiteScore()) +
-                String.format("승리 팀: %s", SideMapper.toName(gameStatus.winner()));
+                String.format("승리 팀: %s" + LINE_SEPARATOR, SideMapper.toName(gameStatus.winner()));
     }
 }
