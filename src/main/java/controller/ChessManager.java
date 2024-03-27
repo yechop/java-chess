@@ -1,11 +1,11 @@
 package controller;
 
 import domain.Command;
-import domain.GameStatus;
 import domain.Turn;
 import domain.board.ChessBoard;
 import domain.board.ChessBoardInitializer;
 import domain.position.Position;
+import domain.status.GameStatus;
 import view.InputView;
 import view.OutputView;
 

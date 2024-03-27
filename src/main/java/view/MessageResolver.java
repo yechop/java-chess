@@ -1,12 +1,12 @@
 package view;
 
-import domain.GameStatus;
 import domain.Side;
 import domain.board.ChessBoard;
 import domain.board.File;
 import domain.board.Rank;
 import domain.piece.Piece;
 import domain.position.Position;
+import domain.status.GameStatus;
 import view.mapper.PieceMapper;
 import view.mapper.SideMapper;
 

@@ -1,5 +1,6 @@
-package domain;
+package domain.status;
 
+import domain.Side;
 import domain.board.ChessBoard;
 import domain.board.ChessBoardInitializer;
 import domain.piece.Piece;

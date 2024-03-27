@@ -1,7 +1,7 @@
 package view;
 
-import domain.GameStatus;
 import domain.board.ChessBoard;
+import domain.status.GameStatus;
 
 public class OutputView {
 

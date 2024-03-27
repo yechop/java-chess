@@ -1,5 +1,6 @@
-package domain;
+package domain.status;
 
+import domain.Side;
 import domain.board.ChessBoard;
 
 public class GameStatus {
