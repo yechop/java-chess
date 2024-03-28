@@ -5,19 +5,20 @@ import domain.board.ChessBoard;
 
 public class GameStatus {
 
-    private double blackScore;
-    private double whiteScore;
+    private final double blackScore;
+    private final double whiteScore;
 
-    public GameStatus() {
-        this.blackScore = 0;
-        this.whiteScore = 0;
+    private GameStatus(double blackScore, double whiteScore) {
+        this.blackScore = blackScore;
+        this.whiteScore = whiteScore;
     }
 
-    public void calculateStatusScore(ChessBoard chessBoard) {
+    public static GameStatus from(ChessBoard chessBoard) {
         ScoreCalculator scoreCalculator = new ScoreCalculator(chessBoard);
 
-        blackScore = scoreCalculator.sumPiecesScore(Side.BLACK);
-        whiteScore = scoreCalculator.sumPiecesScore(Side.WHITE);
+        double blackScore = scoreCalculator.sumPiecesScore(Side.BLACK);
+        double whiteScore = scoreCalculator.sumPiecesScore(Side.WHITE);
+        return new GameStatus(blackScore, whiteScore);
     }
 
     public double blackScore() {

@@ -29,7 +29,7 @@ public class PathTest {
             Position current = PositionFixture.a1();
             Position target = PositionFixture.h8();
 
-            Path path = new Path(current, target);
+            Path path = Path.createOf(current, target);
 
             List<Position> diagonalPath = List.of(PositionFixture.b2(),
                     PositionFixture.c3(),
@@ -48,7 +48,7 @@ public class PathTest {
             Position current = PositionFixture.a1();
             Position target = PositionFixture.h1();
 
-            Path path = new Path(current, target);
+            Path path = Path.createOf(current, target);
 
             List<Position> rankPath = List.of(PositionFixture.b1(),
                     PositionFixture.c1(),
@@ -67,7 +67,7 @@ public class PathTest {
             Position current = PositionFixture.a1();
             Position target = PositionFixture.a8();
 
-            Path path = new Path(current, target);
+            Path path = Path.createOf(current, target);
 
             List<Position> filePath = List.of(PositionFixture.a2(),
                     PositionFixture.a3(),
@@ -87,7 +87,7 @@ public class PathTest {
         Position current = PositionFixture.a1();
         Position target = PositionFixture.h8();
 
-        Path path = new Path(current, target);
+        Path path = Path.createOf(current, target);
 
         Map<Position, Piece> board = new LinkedHashMap<>();
 
@@ -95,7 +95,7 @@ public class PathTest {
         board.put(PositionFixture.b2(), new Pawn(Side.BLACK));
         board.put(PositionFixture.g7(), new King(Side.BLACK));
 
-        Map<Position, Piece> pieces = path.findPieces(target, board);
+        Map<Position, Piece> pieces = path.findPieces(board);
 
         Map<Position, Piece> piecesOnPath = new LinkedHashMap<>();
         piecesOnPath.put(PositionFixture.b2(), new Pawn(Side.BLACK));

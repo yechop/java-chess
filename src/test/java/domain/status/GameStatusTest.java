@@ -30,8 +30,7 @@ public class GameStatusTest {
             map.put(PositionFixture.d4(), PieceFixture.blackQueen());
 
             ChessBoard chessBoard = new ChessBoard(map);
-            GameStatus gameStatus = new GameStatus();
-            gameStatus.calculateStatusScore(chessBoard);
+            GameStatus gameStatus = GameStatus.from(chessBoard);
 
             assertThat(gameStatus.blackScore()).isEqualTo(11.5);
             assertThat(gameStatus.whiteScore()).isEqualTo(9);
@@ -47,8 +46,7 @@ public class GameStatusTest {
             map.put(PositionFixture.d4(), PieceFixture.whiteQueen());
 
             ChessBoard chessBoard = new ChessBoard(map);
-            GameStatus gameStatus = new GameStatus();
-            gameStatus.calculateStatusScore(chessBoard);
+            GameStatus gameStatus = GameStatus.from(chessBoard);
 
             assertThat(gameStatus.blackScore()).isEqualTo(9);
             assertThat(gameStatus.whiteScore()).isEqualTo(11.5);
@@ -65,8 +63,7 @@ public class GameStatusTest {
             map.put(PositionFixture.d4(), PieceFixture.blackQueen());
 
             ChessBoard chessBoard = new ChessBoard(map);
-            GameStatus gameStatus = new GameStatus();
-            gameStatus.calculateStatusScore(chessBoard);
+            GameStatus gameStatus = GameStatus.from(chessBoard);
 
             assertThat(gameStatus.blackScore()).isEqualTo(11.5);
             assertThat(gameStatus.whiteScore()).isEqualTo(11.5);

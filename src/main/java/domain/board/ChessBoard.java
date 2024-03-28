@@ -47,8 +47,8 @@ public class ChessBoard {
     }
 
     private Map<Position, Piece> findPiecesOnPath(Position current, Position target) {
-        Path path = new Path(current, target);
-        return path.findPieces(target, board);
+        Path path = Path.createOf(current, target);
+        return path.findPieces(board);
     }
 
     public boolean isKingAlive() {
