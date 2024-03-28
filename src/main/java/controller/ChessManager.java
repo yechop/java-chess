@@ -25,30 +25,29 @@ public class ChessManager {
         Command command = inputView.readInitCommand();
 
         while (!command.isEnd()) {
-            runStartCommand(command, chessBoard);
-            runMoveCommand(command, chessBoard, turn);
-            runStatusCommand(command, chessBoard);
+            processIfStartCommand(command, chessBoard);
+            processIfMoveCommand(command, chessBoard, turn);
+            processIfStatusCommand(command, chessBoard);
 
             command = decideGameCommand(chessBoard);
         }
     }
 
-    private void runStartCommand(Command command, ChessBoard chessBoard) {
+    private void processIfStartCommand(Command command, ChessBoard chessBoard) {
         if (command.isStart()) {
             outputView.printChessBoard(chessBoard);
         }
     }
 
-    private void runMoveCommand(Command command, ChessBoard chessBoard, Turn turn) {
+    private void processIfMoveCommand(Command command, ChessBoard chessBoard, Turn turn) {
         if (command.isMove()) {
             progressOneTurn(chessBoard, turn);
         }
     }
 
-    private void runStatusCommand(Command command, ChessBoard chessBoard) {
+    private void processIfStatusCommand(Command command, ChessBoard chessBoard) {
         if (command.isStatus()) {
-            GameStatus gameStatus = new GameStatus();
-            gameStatus.calculateStatusScore(chessBoard);
+            GameStatus gameStatus = GameStatus.from(chessBoard);
             outputView.printStatus(gameStatus);
         }
     }
