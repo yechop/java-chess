@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class ChessBoardInitializer {
 
@@ -26,17 +25,17 @@ public class ChessBoardInitializer {
     }
 
     private static void initSide(Side side, Map<Position, Piece> board) {
-        initPiece(InitPosition.ROOK, side, () -> new Rook(side), board);
-        initPiece(InitPosition.KNIGHT, side, () -> new Knight(side), board);
-        initPiece(InitPosition.BISHOP, side, () -> new Bishop(side), board);
-        initPiece(InitPosition.QUEEN, side, () -> new Queen(side), board);
-        initPiece(InitPosition.KING, side, () -> new King(side), board);
-        initPiece(InitPosition.PAWN, side, () -> new Pawn(side), board);
+        initPiece(InitPosition.ROOK, side, new Rook(side), board);
+        initPiece(InitPosition.KNIGHT, side, new Knight(side), board);
+        initPiece(InitPosition.BISHOP, side, new Bishop(side), board);
+        initPiece(InitPosition.QUEEN, side, new Queen(side), board);
+        initPiece(InitPosition.KING, side, new King(side), board);
+        initPiece(InitPosition.PAWN, side, new Pawn(side), board);
     }
 
-    private static void initPiece(InitPosition initPosition, Side side, Supplier<Piece> pieceSupplier, Map<Position, Piece> board) {
+    private static void initPiece(InitPosition initPosition, Side side, Piece piece, Map<Position, Piece> board) {
         List<File> files = initPosition.files();
         Rank rank = initPosition.rank(side);
-        files.forEach(file -> board.put(Position.valueOf(file, rank), pieceSupplier.get()));
+        files.forEach(file -> board.put(Position.valueOf(file, rank), piece));
     }
 }
