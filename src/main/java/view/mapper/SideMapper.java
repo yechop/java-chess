@@ -26,4 +26,12 @@ public enum SideMapper {
                 .map(value -> value.name)
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 side가 없습니다."));
     }
+
+    public static Side toSide(String data) {
+        return Arrays.stream(values())
+                .filter(sideMapper -> sideMapper.side.toString().equals(data))
+                .map(sideMapper -> sideMapper.side)
+                .findFirst()
+                .orElseThrow();
+    }
 }

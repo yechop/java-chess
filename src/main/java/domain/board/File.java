@@ -43,8 +43,7 @@ public enum File {
     }
 
     public int gap(File other) {
-        int otherOrder = other.order;
-        return Math.abs(order - otherOrder);
+        return Math.abs(order - other.order);
     }
 
     public List<File> findBetween(File target) {
@@ -68,5 +67,9 @@ public enum File {
 
     private Predicate<File> currentToTarget(File target) {
         return file -> file.order > this.order && file.order < target.order;
+    }
+
+    public String toData() {
+        return this.toString().toLowerCase();
     }
 }

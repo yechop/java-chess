@@ -110,6 +110,10 @@ public class Position {
         return valueOf(this.file, rank);
     }
 
+    public String toData() {
+        return file.toData() + rank.toData();
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;

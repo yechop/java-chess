@@ -69,4 +69,8 @@ public enum Rank {
     private Predicate<Rank> currentToTarget(Rank target) {
         return rank -> rank.order > this.order && rank.order < target.order;
     }
+
+    public String toData() {
+        return String.valueOf(order);
+    }
 }

@@ -4,6 +4,9 @@ import domain.Command;
 import domain.Turn;
 import domain.board.ChessBoard;
 import domain.board.ChessBoardInitializer;
+import domain.dao.ChessGameDaoImpl;
+import domain.dao.ChessGameService;
+import domain.dao.UserDao;
 import domain.position.Position;
 import domain.status.GameStatus;
 import view.InputView;
@@ -20,8 +23,17 @@ public class ChessManager {
     }
 
     public void start() {
-        ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.init());
-        Turn turn = new Turn();
+        ChessBoard chessBoard;
+        Turn turn;
+        ChessGameDaoImpl chessGameDaoImpl = new ChessGameDaoImpl(new UserDao());
+        ChessGameService chessGameService = new ChessGameService(chessGameDaoImpl);
+        try {
+            chessBoard = new ChessBoard(chessGameService.loadBoard());
+            turn = chessGameService.loadTurn();
+        } catch (IllegalArgumentException illegalArgumentException) {
+            chessBoard = new ChessBoard(ChessBoardInitializer.init());
+            turn = new Turn();
+        }
         Command command = inputView.readInitCommand();
 
         while (!command.isEnd()) {
@@ -29,7 +41,9 @@ public class ChessManager {
             processIfMoveCommand(command, chessBoard, turn);
             processIfStatusCommand(command, chessBoard);
 
-            command = decideGameCommand(chessBoard);
+            chessGameService.resetBoard();
+            chessGameService.saveData(chessBoard, turn);
+            command = decideGameCommand(chessBoard, chessGameService);
         }
     }
 
@@ -52,10 +66,11 @@ public class ChessManager {
         }
     }
 
-    private Command decideGameCommand(ChessBoard chessBoard) {
+    private Command decideGameCommand(ChessBoard chessBoard, ChessGameService chessGameService) {
         if (chessBoard.isKingAlive()) {
             return inputView.readPlayCommand();
         }
+        chessGameService.resetBoard();
         return Command.END;
     }
 

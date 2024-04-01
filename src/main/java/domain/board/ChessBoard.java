@@ -4,6 +4,7 @@ import domain.Side;
 import domain.piece.Piece;
 import domain.position.Position;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 public class ChessBoard {
 
     public static final int ALL_KING_ALIVE = 2;
+
     private final Map<Position, Piece> board;
 
     public ChessBoard(Map<Position, Piece> board) {
@@ -71,5 +73,9 @@ public class ChessBoard {
                 .filter(entry -> entry.getValue().isSameSide(side))
                 .filter(entry -> entry.getValue().isPawn())
                 .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }

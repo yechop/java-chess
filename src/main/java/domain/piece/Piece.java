@@ -2,6 +2,7 @@ package domain.piece;
 
 import domain.Side;
 import domain.position.Position;
+import view.mapper.PieceMapper;
 
 import java.util.List;
 import java.util.Map;
@@ -86,6 +87,18 @@ public abstract class Piece {
                 .toList();
     }
 
+    public double getScore() {
+        return score.getScore();
+    }
+
+    public double decreaseScore() {
+        throw new IllegalArgumentException("폰 외의 기물은 피스 점수를 변경할 수 없습니다.");
+    }
+
+    public String toData() {
+        return PieceMapper.toSymbol(this);
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
@@ -97,13 +110,5 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(side);
-    }
-
-    public double getScore() {
-        return score.getScore();
-    }
-
-    public double decreaseScore() {
-        throw new IllegalArgumentException("폰 외의 기물은 피스 점수를 변경할 수 없습니다.");
     }
 }
