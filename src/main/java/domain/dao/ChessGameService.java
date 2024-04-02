@@ -17,24 +17,24 @@ public class ChessGameService {
         this.chessGameDao = chessGameDao;
     }
 
-    public void saveData(ChessBoard chessBoard, Turn turn) {
+    public void saveData(String roomName, ChessBoard chessBoard, Turn turn) {
+        chessGameDao.deleteBoard(roomName);
         String boardData = BoardDaoMapper.boardToData(chessBoard.getBoard());
         String turnData = TurnDaoMapper.turnToData(turn);
-
-        chessGameDao.saveData(boardData, turnData);
+        chessGameDao.saveData(roomName, boardData, turnData);
     }
 
-    public void resetBoard() {
-        chessGameDao.resetChessBoard();
-    }
-
-    public Map<Position, Piece> loadBoard() {
-        String data = chessGameDao.dataToBoard();
+    public Map<Position, Piece> loadBoard(String roomName) {
+        String data = chessGameDao.dataToBoard(roomName);
         return BoardDaoMapper.dataToBoard(data);
     }
 
-    public Turn loadTurn() {
-        String data = chessGameDao.dataToTurn();
+    public Turn loadTurn(String roomName) {
+        String data = chessGameDao.dataToTurn(roomName);
         return TurnDaoMapper.dataToTurn(data);
+    }
+
+    public void resetBoard(String roomName) {
+        chessGameDao.deleteBoard(roomName);
     }
 }

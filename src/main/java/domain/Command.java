@@ -8,8 +8,8 @@ public enum Command {
     STATUS,
     ;
 
-    public boolean isEnd() {
-        return this == END;
+    public boolean isNotEnd() {
+        return this != END;
     }
 
     public boolean isMove() {

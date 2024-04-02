@@ -1,6 +1,6 @@
 package domain.dao;
 
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ChessGameDaoImpl implements ChessGameDao {
 
@@ -11,65 +11,85 @@ public class ChessGameDaoImpl implements ChessGameDao {
     }
 
     @Override
-    public void saveData(String boardData, String turnData) {
-        final var insertQuery = "INSERT INTO chess VALUES(?, ?)";
+    public void saveData(String roomName, String boardData, String turnData) {
+        createTableIfNotExists();
+        final var insertQuery = "INSERT INTO chess(roomName, gameStatus, turn) VALUES(?, ?, ?)";
         try (final var connection = userDao.getConnection();
              final var insertStatement = connection.prepareStatement(insertQuery)) {
-            insertStatement.setString(1, boardData);
-            insertStatement.setString(2, turnData);
+            insertStatement.setString(1, roomName);
+            insertStatement.setString(2, boardData);
+            insertStatement.setString(3, turnData);
             insertStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @Override
-    public void resetChessBoard() {
-        final var resetQuery = "TRUNCATE TABLE chess";
-        try (final var connection = userDao.getConnection();
-             final var resetStatement = connection.prepareStatement(resetQuery);
-        ) {
-            resetStatement.executeUpdate();
+    private void createTableIfNotExists() {
+        final var query = "CREATE TABLE IF NOT EXISTS chess (" +
+                "id INT AUTO_INCREMENT PRIMARY KEY, " +
+                "roomName VARCHAR(30) NOT NULL UNIQUE," +
+                "gameStatus VARCHAR(500) NOT NULL, " +
+                "turn VARCHAR(10) NOT NULL)";
+        try (final Connection connection = userDao.getConnection();
+             final Statement statement = connection.createStatement()) {
+            statement.executeUpdate(query);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public String dataToBoard() {
-        var query = "SELECT gameStatus FROM chess";
+    public void deleteBoard(String roomName) {
+        final var query = "DELETE FROM chess WHERE roomName = ?";
 
-        try (final var connection = userDao.getConnection()) {
-            assert connection != null;
-            try (final var preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = userDao.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, roomName);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 
-                final var resultSet = preparedStatement.executeQuery();
+    @Override
+    public String dataToBoard(String roomName) {
+        String query = "SELECT gameStatus FROM chess WHERE roomName = ?";
+
+        try (Connection connection = userDao.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, roomName);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getString("gameStatus");
+                } else {
+                    throw new IllegalArgumentException(roomName + "과 일치하는 방이 없습니다.");
                 }
             }
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
-        throw new IllegalArgumentException();
     }
 
     @Override
-    public String dataToTurn() {
-        var query = "SELECT turn FROM chess";
+    public String dataToTurn(String roomName) {
+        var query = "SELECT turn FROM chess WHERE roomName = ?";
 
         try (final var connection = userDao.getConnection()) {
             assert connection != null;
             try (final var preparedStatement = connection.prepareStatement(query)) {
 
+                preparedStatement.setString(1, roomName);
                 final var resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
                     return resultSet.getString("turn");
+                } else {
+                    throw new IllegalArgumentException(roomName + "과 일치하는 방이 없어 turn을 찾을 수 없습니다.");
                 }
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-        throw new IllegalArgumentException();
     }
 }

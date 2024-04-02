@@ -2,11 +2,11 @@ package domain.dao;
 
 public interface ChessGameDao {
 
-    void saveData(String boardData, String turnData);
+    void saveData(String roomName, String boardData, String turnData);
 
-    void resetChessBoard();
+    void deleteBoard(String roomName);
 
-    String dataToBoard();
+    String dataToBoard(String roomName);
 
-    String dataToTurn();
+    String dataToTurn(String roomName);
 }

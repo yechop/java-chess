@@ -18,4 +18,12 @@ public class OutputView {
     public void printStatus(GameStatus gameStatus) {
         System.out.println(messageResolver.resolveStatusMessage(gameStatus));
     }
+
+    public void printLoadGame(String roomName) {
+        System.out.println(messageResolver.resolveLoadGameMessage(roomName));
+    }
+
+    public void printNewGame(String roomName) {
+        System.out.println(messageResolver.resolveNewGameMessage(roomName));
+    }
 }

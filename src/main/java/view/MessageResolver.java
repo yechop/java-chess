@@ -48,4 +48,12 @@ public class MessageResolver {
                 String.format("%s팀 스코어: %.1f" + LINE_SEPARATOR, SideMapper.toName(Side.WHITE), gameStatus.whiteScore()) +
                 String.format("승리 팀: %s" + LINE_SEPARATOR, SideMapper.toName(gameStatus.winner()));
     }
+
+    public String resolveLoadGameMessage(String roomName) {
+        return "기존의 게임 " + roomName + "을(를) 불러옵니다." + LINE_SEPARATOR;
+    }
+
+    public String resolveNewGameMessage(String roomName) {
+        return "새로운 게임 " + roomName + "을(를) 생성합니다." + LINE_SEPARATOR;
+    }
 }

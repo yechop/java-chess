@@ -23,27 +23,30 @@ public class ChessManager {
     }
 
     public void start() {
+        Command command = inputView.readInitCommand();
+        String roomName = inputView.readRoomName();
+
         ChessBoard chessBoard;
         Turn turn;
         ChessGameDaoImpl chessGameDaoImpl = new ChessGameDaoImpl(new UserDao());
         ChessGameService chessGameService = new ChessGameService(chessGameDaoImpl);
         try {
-            chessBoard = new ChessBoard(chessGameService.loadBoard());
-            turn = chessGameService.loadTurn();
+            chessBoard = new ChessBoard(chessGameService.loadBoard(roomName));
+            turn = chessGameService.loadTurn(roomName);
+            outputView.printLoadGame(roomName);
         } catch (IllegalArgumentException illegalArgumentException) {
             chessBoard = new ChessBoard(ChessBoardInitializer.init());
             turn = new Turn();
+            outputView.printNewGame(roomName);
         }
-        Command command = inputView.readInitCommand();
 
-        while (!command.isEnd()) {
+        while (command.isNotEnd()) {
             processIfStartCommand(command, chessBoard);
             processIfMoveCommand(command, chessBoard, turn);
             processIfStatusCommand(command, chessBoard);
 
-            chessGameService.resetBoard();
-            chessGameService.saveData(chessBoard, turn);
-            command = decideGameCommand(chessBoard, chessGameService);
+            chessGameService.saveData(roomName, chessBoard, turn);
+            command = decideGameCommand(roomName, chessBoard, chessGameService);
         }
     }
 
@@ -66,11 +69,11 @@ public class ChessManager {
         }
     }
 
-    private Command decideGameCommand(ChessBoard chessBoard, ChessGameService chessGameService) {
+    private Command decideGameCommand(String roomName, ChessBoard chessBoard, ChessGameService chessGameService) {
         if (chessBoard.isKingAlive()) {
             return inputView.readPlayCommand();
         }
-        chessGameService.resetBoard();
+        chessGameService.resetBoard(roomName);
         return Command.END;
     }
 
