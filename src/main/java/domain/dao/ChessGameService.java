@@ -2,6 +2,8 @@ package domain.dao;
 
 import domain.Turn;
 import domain.board.ChessBoard;
+import domain.dao.mapper.BoardDaoMapper;
+import domain.dao.mapper.TurnDaoMapper;
 import domain.piece.Piece;
 import domain.position.Position;
 
@@ -16,8 +18,8 @@ public class ChessGameService {
     }
 
     public void saveData(ChessBoard chessBoard, Turn turn) {
-        String boardData = ChessDaoMapper.boardToData(chessBoard.getBoard());
-        String turnData = turn.toData();
+        String boardData = BoardDaoMapper.boardToData(chessBoard.getBoard());
+        String turnData = TurnDaoMapper.turnToData(turn);
 
         chessGameDao.saveData(boardData, turnData);
     }
@@ -28,11 +30,11 @@ public class ChessGameService {
 
     public Map<Position, Piece> loadBoard() {
         String data = chessGameDao.dataToBoard();
-        return ChessDaoMapper.dataToBoard(data);
+        return BoardDaoMapper.dataToBoard(data);
     }
 
     public Turn loadTurn() {
         String data = chessGameDao.dataToTurn();
-        return ChessDaoMapper.dataToTurn(data);
+        return TurnDaoMapper.dataToTurn(data);
     }
 }

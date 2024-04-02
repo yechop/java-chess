@@ -2,7 +2,6 @@ package domain.piece;
 
 import domain.Side;
 import domain.position.Position;
-import view.mapper.PieceMapper;
 
 import java.util.List;
 import java.util.Map;
@@ -93,10 +92,6 @@ public abstract class Piece {
 
     public double decreaseScore() {
         throw new IllegalArgumentException("폰 외의 기물은 피스 점수를 변경할 수 없습니다.");
-    }
-
-    public String toData() {
-        return PieceMapper.toSymbol(this);
     }
 
     @Override

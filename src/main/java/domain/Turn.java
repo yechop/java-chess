@@ -30,10 +30,6 @@ public class Turn {
         side = side.opponent();
     }
 
-    public String toData() {
-        return side.toString();
-    }
-
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;

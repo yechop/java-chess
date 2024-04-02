@@ -68,8 +68,4 @@ public enum File {
     private Predicate<File> currentToTarget(File target) {
         return file -> file.order > this.order && file.order < target.order;
     }
-
-    public String toData() {
-        return this.toString().toLowerCase();
-    }
 }
