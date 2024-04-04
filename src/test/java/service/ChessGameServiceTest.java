@@ -1,5 +1,6 @@
-package domain.dao;
+package service;
 
+import dao.ChessGameDao;
 import domain.Side;
 import domain.Turn;
 import domain.board.ChessBoardInitializer;
@@ -19,7 +20,7 @@ class ChessGameServiceTest {
 
     @BeforeEach
     void setUp() {
-        chessGameService = new ChessGameService(new ChessGameDao() {
+        chessGameService = new ChessGameService("roomName", new ChessGameDao() {
             @Override
             public void saveData(String roomName, String boardData, String turnData) {
             }
@@ -43,14 +44,14 @@ class ChessGameServiceTest {
     @DisplayName("저장된 데이터를 보드로 가져온다")
     @Test
     void loadBoard() {
-        Map<Position, Piece> board = chessGameService.loadBoard("room");
+        Map<Position, Piece> board = chessGameService.loadBoard();
         assertThat(board).isEqualTo(ChessBoardInitializer.init());
     }
 
     @DisplayName("저장된 턴 정보를 턴으로 가져온다")
     @Test
     void loadTurn() {
-        Turn turn = chessGameService.loadTurn("room");
+        Turn turn = chessGameService.loadTurn();
         assertThat(turn).isEqualTo(new Turn(Side.WHITE));
     }
 }

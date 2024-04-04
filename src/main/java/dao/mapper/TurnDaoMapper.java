@@ -1,4 +1,4 @@
-package domain.dao.mapper;
+package dao.mapper;
 
 import domain.Side;
 import domain.Turn;

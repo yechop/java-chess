@@ -1,4 +1,4 @@
-package domain.dao;
+package dao;
 
 public interface ChessGameDao {
 

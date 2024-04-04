@@ -60,7 +60,7 @@ public class ChessBoardTest {
         @DisplayName("두 왕이 모두 살아있는지 확인한다.")
         @Test
         void allKingsAlive() {
-            assertThat(chessBoard.isKingAlive()).isTrue();
+            assertThat(chessBoard.isAllKingAlive()).isTrue();
         }
 
         @DisplayName("왕이 하나라도 죽었는지 확인한다.")
@@ -68,7 +68,7 @@ public class ChessBoardTest {
         void oneKingDie() {
             chessBoard.move(PositionFixture.a1(), PositionFixture.a2());
 
-            assertThat(chessBoard.isKingAlive()).isFalse();
+            assertThat(chessBoard.isAllKingAlive()).isFalse();
         }
     }
 }

@@ -53,7 +53,7 @@ public class ChessBoard {
         return path.findPieces(board);
     }
 
-    public boolean isKingAlive() {
+    public boolean isAllKingAlive() {
         long kingCount = board.values().stream()
                 .filter(Piece::isKing)
                 .count();

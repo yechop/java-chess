@@ -1,4 +1,4 @@
-package domain.dao.mapper;
+package dao.mapper;
 
 import domain.piece.Piece;
 import domain.position.Position;

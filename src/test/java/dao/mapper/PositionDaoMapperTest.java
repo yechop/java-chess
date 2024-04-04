@@ -1,4 +1,4 @@
-package domain.dao.mapper;
+package dao.mapper;
 
 import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;

@@ -1,4 +1,4 @@
-package domain.dao;
+package dao;
 
 import org.junit.jupiter.api.Test;
 
